@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Камынин Вячеслав — Дизайнер</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #0a0a0f;
+    --surface: #13131a;
+    --surface2:#1a1a24;
+    --border:  #222230;
+    --accent1: #c8f059;
+    --accent2: #ff4d6d;
+    --accent3: #60c8ff;
+    --text:    #e8e8f0;
+    --muted:   #888898;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Golos Text', sans-serif;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 60px;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent1);
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 100px 40px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 80% 20%, rgba(200,240,89,0.09) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 15% 85%, rgba(96,200,255,0.07) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 40% at 60% 55%, rgba(255,77,109,0.05) 0%, transparent 50%);
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 960px; }
+
+  .hero-label {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent1);
+    border: 1px solid rgba(200,240,89,0.35);
+    padding: 6px 14px; border-radius: 4px;
+    margin-bottom: 36px;
+    opacity: 0; animation: fadeUp 0.6s 0.2s forwards;
+  }
+  .hero-label::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent1);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.3; transform: scale(0.7); }
+  }
+
+  .hero-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(64px, 11vw, 130px);
+    line-height: 0.88; letter-spacing: 0.01em;
+    color: var(--text);
+    margin-bottom: 8px;
+    opacity: 0; animation: fadeUp 0.7s 0.35s forwards;
+  }
+
+  .hero-sub {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(20px, 3vw, 36px);
+    color: var(--muted); letter-spacing: 0.08em;
+    margin-bottom: 40px;
+    opacity: 0; animation: fadeUp 0.7s 0.45s forwards;
+  }
+
+  .hero-desc {
+    font-size: 16px; color: var(--muted); line-height: 1.75;
+    max-width: 560px; margin-bottom: 40px;
+    border-left: 2px solid rgba(200,240,89,0.4);
+    padding-left: 20px;
+    opacity: 0; animation: fadeUp 0.7s 0.55s forwards;
+  }
+
+  .hero-tools {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    opacity: 0; animation: fadeUp 0.7s 0.7s forwards;
+    margin-bottom: 60px;
+  }
+  .tool-tag {
+    padding: 5px 13px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--muted); letter-spacing: 0.08em;
+    transition: border-color 0.25s, color 0.25s;
+  }
+  .tool-tag:hover { border-color: var(--accent1); color: var(--accent1); }
+
+  .hero-scroll {
+    position: absolute; bottom: 40px; left: 40px;
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted);
+    display: flex; align-items: center; gap: 12px;
+    opacity: 0; animation: fadeUp 0.7s 1s forwards;
+  }
+  .hero-scroll::after { content: ''; width: 40px; height: 1px; background: var(--muted); }
+
+  /* ─── STATS ─── */
+  .stats {
+    display: flex;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .stat {
+    flex: 1; padding: 28px 32px;
+    border-right: 1px solid var(--border);
+    transition: background 0.3s;
+  }
+  .stat:last-child { border-right: none; }
+  .stat:hover { background: rgba(200,240,89,0.03); }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 44px; color: var(--accent1); line-height: 1; margin-bottom: 6px;
+  }
+  .stat-label { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* ─── SECTION ─── */
+  .section { padding: 90px 40px; max-width: 1400px; margin: 0 auto; }
+
+  .section-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 48px; padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--accent1); margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 5vw, 64px);
+    letter-spacing: 0.02em; line-height: 1;
+  }
+  .section-hint { font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+
+  /* ─── ACCORDION ─── */
+  .case {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 12px; overflow: hidden;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .case:hover { border-color: rgba(200,240,89,0.3); }
+  .case.open { border-color: rgba(200,240,89,0.5); }
+
+  .case-top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 32px; cursor: pointer; user-select: none; gap: 20px;
+  }
+  .case-top-left { display: flex; align-items: center; gap: 24px; }
+  .case-idx {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px; color: var(--border); line-height: 1; min-width: 52px;
+    transition: color 0.3s;
+  }
+  .case.open .case-idx { color: rgba(200,240,89,0.2); }
+  .case-category {
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent1); margin-bottom: 5px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .case-name { font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 0.03em; }
+  .case-chips { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+  .chip {
+    font-size: 10px; font-family: 'JetBrains Mono', monospace;
+    border: 1px solid var(--border); border-radius: 3px;
+    padding: 3px 8px; color: var(--muted); letter-spacing: 0.05em;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .chip:hover { border-color: var(--accent3); color: var(--accent3); }
+
+  .case-toggle {
+    width: 38px; height: 38px; flex-shrink: 0;
+    border: 1px solid var(--border); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; color: var(--muted); transition: all 0.3s;
+  }
+  .case.open .case-toggle { transform: rotate(45deg); border-color: var(--accent1); color: var(--accent1); }
+
+  .case-body { display: none; padding: 0 32px 32px; animation: fadeDown 0.35s ease; }
+  .case.open .case-body { display: block; }
+  .case-divider { border: none; border-top: 1px solid var(--border); margin-bottom: 28px; }
+
+  .case-info { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 28px; }
+  .case-desc { font-size: 14px; color: rgba(232,232,240,0.65); line-height: 1.85; }
+  .case-desc strong { color: var(--text); }
+  .case-solution-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 10px;
+  }
+  .case-solution { font-size: 14px; color: rgba(232,232,240,0.65); line-height: 1.85; }
+  .case-solution strong { color: var(--text); }
+
+  /* ─── CARDS GRID — строго 3:4 ─── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px; margin-top: 24px;
+  }
+  .cards-grid.two { grid-template-columns: repeat(2, 1fr); }
+
+  .card-item {
+    position: relative; overflow: hidden;
+    border-radius: 6px; cursor: zoom-in;
+    background: var(--surface2);
+    aspect-ratio: 3 / 4;           /* ← строго 3:4 */
+    border: 1px solid var(--border);
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .card-item:hover { border-color: rgba(200,240,89,0.45); transform: translateY(-3px); }
+  .card-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .card-label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 28px 12px 10px;
+    background: linear-gradient(transparent, rgba(10,10,15,0.92));
+    font-size: 11px; color: rgba(232,232,240,0.7);
+    font-family: 'JetBrains Mono', monospace; letter-spacing: 0.05em;
+    opacity: 0; transition: opacity 0.25s;
+  }
+  .card-item:hover .card-label { opacity: 1; }
+
+  /* ─── PLACEHOLDER ─── */
+  .img-ph {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 8px; color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.05em;
+    text-align: center; padding: 16px;
+    border: 1px dashed rgba(34,34,48,0.8); border-radius: 5px;
+  }
+  .img-ph .ico { font-size: 26px; opacity: 0.2; }
+  .img-ph span { opacity: 0.4; line-height: 1.5; }
+  .img-ph code { opacity: 0.25; font-size: 9px; margin-top: 4px; }
+
+  /* ─── POS BEFORE/AFTER ─── */
+  .ba-wrap {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 2px; border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden; margin-top: 24px;
+  }
+  .ba-col { background: var(--surface2); padding: 20px; }
+  .ba-col-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px; margin-bottom: 16px;
+  }
+  .ba-col-label.before { color: var(--muted); }
+  .ba-col-label.after  { color: var(--accent1); }
+  .ba-col-label::before {
+    content: ''; width: 7px; height: 7px;
+    border-radius: 50%; background: currentColor;
+  }
+
+  /* Before — 3 старых таблички: сетка 2 колонки */
+  .ba-before-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .ba-before-photos .ba-photo { aspect-ratio: 4/3; }
+  .ba-before-photos .ba-photo.wide { grid-column: span 2; aspect-ratio: 16/7; }
+
+  /* After — 10 новых: смешанная сетка 4 колонки */
+  .ba-new-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+  /* Вертикальные A4 */
+  .pos-v { aspect-ratio: 3/4; }
+  /* Горизонтальные — занимают 2 колонки */
+  .pos-h { aspect-ratio: 16/9; grid-column: span 2; }
+  /* Квадратные */
+  .pos-s { aspect-ratio: 1/1; }
+
+  .ba-photo {
+    background: var(--surface);
+    border-radius: 4px; overflow: hidden; cursor: zoom-in;
+    border: 1px solid var(--border); transition: border-color 0.3s;
+  }
+  .ba-photo:hover { border-color: rgba(200,240,89,0.4); }
+  .ba-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .ba-note { margin-top: 12px; font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  /* ─── СУВЕНИРНАЯ ПРОДУКЦИЯ — единая сетка 11 квадратов ─── */
+  .souvenir-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px; margin-top: 24px;
+  }
+  .souvenir-item {
+    aspect-ratio: 1/1; background: var(--surface2);
+    border-radius: 6px; overflow: hidden; cursor: zoom-in;
+    border: 1px solid var(--border);
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .souvenir-item:hover { border-color: rgba(96,200,255,0.4); transform: translateY(-3px); }
+  .souvenir-item img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* ─── STRIPE ─── */
+  .stripe {
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent2), var(--accent1), var(--accent3));
+  }
+
+  /* ─── CONTACT ─── */
+  .contact {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 80px 40px; border-top: 1px solid var(--border); gap: 40px;
+  }
+  .contact-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px, 6vw, 72px); line-height: 1; }
+  .contact-title span { color: var(--accent1); }
+  .contact-sub { margin-top: 10px; font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.08em; }
+  .contact-links { display: flex; gap: 12px; flex-shrink: 0; }
+  .contact-link {
+    display: inline-block; padding: 12px 24px;
+    border: 1px solid var(--border); border-radius: 6px;
+    font-size: 13px; color: var(--text); text-decoration: none;
+    font-family: 'Golos Text', sans-serif; font-weight: 600;
+    transition: all 0.25s;
+  }
+  .contact-link:hover { border-color: var(--accent1); color: var(--accent1); }
+  .contact-link.primary { background: var(--accent1); color: #0a0a0f; border-color: var(--accent1); }
+  .contact-link.primary:hover { background: transparent; color: var(--accent1); }
+
+  /* ─── LIGHTBOX ─── */
+  .lightbox {
+    display: none; position: fixed; inset: 0; z-index: 500;
+    background: rgba(10,10,15,0.96);
+    align-items: center; justify-content: center; cursor: zoom-out;
+  }
+  .lightbox.active { display: flex; }
+  .lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 6px; box-shadow: 0 0 80px rgba(0,0,0,0.8); }
+  .lightbox-close {
+    position: fixed; top: 24px; right: 32px;
+    font-size: 32px; color: var(--muted); cursor: pointer;
+    transition: color 0.2s; font-family: 'Bebas Neue', sans-serif; line-height: 1;
+  }
+  .lightbox-close:hover { color: var(--accent1); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.4,0,0.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 860px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 80px 20px 70px; }
+    .section { padding: 60px 20px; }
+    .stats { flex-direction: column; }
+    .stat { border-right: none; border-bottom: 1px solid var(--border); }
+    .case-top { padding: 18px 20px; }
+    .case-body { padding: 0 20px 24px; }
+    .case-info { grid-template-columns: 1fr; gap: 20px; }
+    .cards-grid { grid-template-columns: repeat(2, 1fr); }
+    .cards-grid.two { grid-template-columns: 1fr; }
+    .ba-wrap { grid-template-columns: 1fr; }
+    .ba-new-grid { grid-template-columns: repeat(2, 1fr); }
+    .pos-h { grid-column: span 2; }
+    .souvenir-grid { grid-template-columns: repeat(3, 1fr); }
+    .contact { flex-direction: column; align-items: flex-start; padding: 60px 20px; }
+    .contact-links { flex-direction: column; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Портфолио</div>
+  <ul class="nav-links">
+    <li><a href="#cases">Карточки Ozon</a></li>
+    <li><a href="#signage">POS</a></li>
+    <li><a href="#souvenir">Сувениры</a></li>
+    <li><a href="#contact">Контакты</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-label">Дизайнер · wuwstore · Томск</div>
+    <div class="hero-name">
+      Камынин<br>Вячеслав
+    </div>
+    <div class="hero-sub">E-commerce &amp; Graphic Designer</div>
+    <p class="hero-desc">
+      6 лет занимался дизайном в крупнейшем в Сибири магазине аниме и азитских товаров <strong>"Whatever You Want!"</strong>. Карточки товаров для маркетплейсов, навигация в магазине, 
+      сувенирная продукция и моушен-ролики.
+    </p>
+    <div class="hero-tools">
+      <span class="tool-tag">Photoshop</span>
+      <span class="tool-tag">CorelDraw</span>
+      <span class="tool-tag">Illustrator</span>
+      <span class="tool-tag">After Effects</span>
+      <span class="tool-tag">Figma</span>
+      <span class="tool-tag">Нейросети</span>
+    </div>
+  </div>
+  <div class="hero-scroll">Кейсы ниже</div>
+</div>
+
+<!-- STATS -->
+<div class="stats reveal">
+  <div class="stat">
+    <div class="stat-num">6</div>
+    <div class="stat-label">Лет опыта</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">Карточки товаров</div>
+    <div class="stat-label">Маркетплейсы</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">POS</div>
+    <div class="stat-label">Навигация в магазине</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">Merch designer</div>
+    <div class="stat-label">Сувенирная продукция</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SECTION 1 — OZON
+══════════════════════════════════════ -->
+<div class="section" id="cases">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-eyebrow">01 — Карточки товаров</div>
+      <div class="section-title">Ozon / Маркетплейсы</div>
+    </div>
+    <div class="section-hint">Нажмите на кейс чтобы раскрыть</div>
+  </div>
+
+  <!-- CASE 1: Ganyu -->
+  <div class="case open" id="c1">
+    <div class="case-top" onclick="toggle('c1')">
+      <div class="case-top-left">
+        <div class="case-idx">01</div>
+        <div>
+          <div class="case-category">Аниме-фигурка · Genshin Impact</div>
+          <div class="case-name">Ganyu — Plenilune Gaze Ver.</div>
+          <div class="case-chips">
+            <span class="chip">Photoshop</span>
+            <span class="chip">CorelDraw</span>
+            <span class="chip">Nano Banana AI</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-toggle">+</div>
+    </div>
+    <div class="case-body">
+      <hr class="case-divider">
+      <div class="case-info">
+        <div>
+          <p class="case-desc">
+            Официальная фигурка Гань Юй из Genshin Impact, масштаб 1/7. Покупают её фанаты игры, 
+            которые хотят убедиться что это оригинал, а не реплика. Важно было показать качество 
+            и сразу закрыть вопросы про размеры и материалы.
+          </p>
+        </div>
+        <div>
+          <div class="case-solution-title">Что сделал</div>
+          <p class="case-solution">
+            Три слайда: <strong> главная</strong> с персонажем, 
+            <strong>lifestyle</strong> на геймерском столе — фон сгенерировал в Nano Banana, доработал в Photoshop, 
+            и <strong>технический</strong> со всеми параметрами. 
+            Технический слайд уменьшает количество вопросов в отзывах. Дизайн всех карточек товаров для wuwstore опирается на разработанный мной для магазина pos дизайн.
+          </p>
+        </div>
+      </div>
+      <div class="cards-grid">
+        <div class="card-item" onclick="light(this)">
+          <img src="images/gun1.jpg" alt="Ganyu — главная карточка">
+          <div class="img-ph"><span class="ico">🖼</span><span>Ganyu — слайд 1<br>Главная</span></div>
+          <div class="card-label">Главная</div>
+        </div>
+        <div class="card-item" onclick="light(this)">
+          <img src="images/gun2.jpg" alt="Ganyu — lifestyle">
+          <div class="img-ph"><span class="ico">🖼</span><span>Ganyu — слайд 2<br>Характеристики</span></div>
+          <div class="card-label">Характеристики</div>
+        </div>
+        <div class="card-item" onclick="light(this)">
+          <img src="images/gun3.jpg" alt="Ganyu — lifestyle">
+          <div class="img-ph"><span class="ico">🖼</span><span>Ganyu — слайд 3<br>lifestyle на столе</span></div>
+          <div class="card-label">Lifestyle</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASE 2: Monster -->
+  <div class="case" id="c2">
+    <div class="case-top" onclick="toggle('c2')">
+      <div class="case-top-left">
+        <div class="case-idx">02</div>
+        <div>
+          <div class="case-category">Энергетический напиток</div>
+          <div class="case-name">Monster Energy Nitro Super Dry</div>
+          <div class="case-chips">
+            <span class="chip">Photoshop</span>
+            <span class="chip">CorelDraw</span>
+            <span class="chip">Nano Banana AI</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-toggle">+</div>
+    </div>
+    <div class="case-body">
+      <hr class="case-divider">
+      <div class="case-info">
+        <div>
+          <p class="case-desc">
+            Monster Nitro — популярный энергетик которым торгует множетсто магазинов и было выжно выделить карточки в выдаче. Проиводитель пишет, что использует для этого вкуса уникальную технологию прпоизводства с азотом. Азот делает напиток мягким и кремовым, 
+            без резкого привкуса и похожим на сухое вино. Нужно было объяснить это покупателю на маркетплейсе 
+            быстро и понятно — в паре слайдов.
+          </p>
+        </div>
+        <div>
+          <div class="case-solution-title">Что сделал</div>
+          <p class="case-solution">
+            Фото банки обработал в Photoshop. 
+            Цвета использовал кислотные под стать банке, они фирменные у Monster. Добавил инфо с характеристиками. Сгенерировал на основе официального фото с помощью <strong>Nano Banana</strong> динаминое изображение банки с выливающимся напитком, цвет напитка аутентичный.
+          </p>
+        </div>
+      </div>
+      <div class="cards-grid two">
+        <div class="card-item" onclick="light(this)">
+          <img src="images/mon1.jpg" alt="Monster Nitro — главная">
+          <div class="img-ph"><span class="ico">🖼</span><span>Monster Nitro — слайд 1<br>Главная карточка</span><code>&lt;!-- img src="images/monster-card-1.jpg" --&gt;</code></div>
+          <div class="card-label">Главная</div>
+        </div>
+        <div class="card-item" onclick="light(this)">
+          <img src="images/mon2.jpg" alt="Monster Nitro — Характеристики">
+          <div class="img-ph"><span class="ico">🖼</span><span>Monster Nitro — слайд 2<br>Характеристики</span><code>&lt;!-- img src="images/monster-card-2.jpg" --&gt;</code></div>
+          <div class="card-label">Характеристики</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASE 3: Formidable -->
+  <div class="case" id="c3">
+    <div class="case-top" onclick="toggle('c3')">
+      <div class="case-top-left">
+        <div class="case-idx">03</div>
+        <div>
+          <div class="case-category">Аниме-фигурка · Нишевый продукт</div>
+          <div class="case-name">Formidable — Rose Ceremony</div>
+          <div class="case-chips">
+            <span class="chip">Photoshop</span>
+            <span class="chip">CorelDraw</span>
+            <span class="chip">Nano Banana AI</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-toggle">+</div>
+    </div>
+    <div class="case-body">
+      <hr class="case-divider">
+      <div class="case-info">
+        <div>
+          <p class="case-desc">
+            Фигурка без привязки к популярной франшизе. Когда у товара нет узнаваемого имени, 
+            всё решает картинка — нужно было сделать так, чтобы человек захотел купить просто 
+            глядя на превью.
+          </p>
+        </div>
+        <div>
+          <div class="case-solution-title">Что сделал</div>
+          <p class="case-solution">
+            Четыре слайда: <strong>главная</strong>, крупный план с акцентом на детализацию, 
+            <strong>lifestyle</strong> с геймерским столом на ИИ-фоне 
+            и еще один слайд убеждающий покупателей, что фигурка хороша для подарка. 
+            Каждый слайд закрывает свой вопрос.
+          </p>
+        </div>
+      </div>
+      <div class="cards-grid" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="card-item" onclick="light(this)">
+          <img src="images/ros1.jpg" alt="Formidable — главная">
+          <div class="img-ph"><span class="ico">🖼</span><span>Formidable — слайд 1<br>главная + 18 см</span></div>
+          <div class="card-label">Главная</div>
+        </div>
+        <div class="card-item" onclick="light(this)">
+          <img src="images/ros2.jpg" alt="Formidable — подарок">
+          <div class="img-ph"><span class="ico">🖼</span><span>Formidable — слайд 2<br>подойдёт для подарка</span></div>
+          <div class="card-label">Подарок</div>
+        </div>
+        <div class="card-item" onclick="light(this)">
+          <img src="images/ros3.jpg" alt="Formidable — детализация">
+          <div class="img-ph"><span class="ico">🖼</span><span>Formidable — слайд 3<br>детализация</span></div>
+          <div class="card-label">Детализация</div>
+        </div>
+        <div class="card-item" onclick="light(this)">
+          <img src="images/ros4.jpg" alt="Formidable — lifestyle">
+          <div class="img-ph"><span class="ico">🖼</span><span>Formidable — слайд 4<br>lifestyle в интерьере</span></div>
+          <div class="card-label">Lifestyle</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASE 4: Buldak -->
+  <div class="case" id="c4">
+    <div class="case-top" onclick="toggle('c4')">
+      <div class="case-top-left">
+        <div class="case-idx">04</div>
+        <div>
+          <div class="case-category">Корейская лапша</div>
+          <div class="case-name">Samyang Buldak Quattro Cheese</div>
+          <div class="case-chips">
+            <span class="chip">Photoshop</span>
+            <span class="chip">CorelDraw</span>
+            <span class="chip">Nano Banana AI</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-toggle">+</div>
+    </div>
+    <div class="case-body">
+      <hr class="case-divider">
+      <div class="case-info">
+        <div>
+          <p class="case-desc">
+            Лапша Buldak — корейский импорт с активной аудиторией. 
+            Нужно было сделать карточки для людей уже знакомых с продуктом.
+          </p>
+        </div>
+        <div>
+          <div class="case-solution-title">Что сделал</div>
+          <p class="case-solution">
+            Делал в CorelDrawу, lifestyle изображение на второй карточке сделал с <strong>Nano Banana</strong> и обработал в <strong>Photoshop</strong>
+          </p>
+        </div>
+      </div>
+      <div class="cards-grid two">
+        <div class="card-item" onclick="light(this)">
+          <img src="images/bul1.jpg" alt="Buldak — Главная карточка">
+          <div class="img-ph"><span class="ico">🖼</span><span>Buldak — слайд 1<br>Главная</span></div>
+          <div class="card-label">Главная</div>
+        </div>
+        <div class="card-item" onclick="light(this)">
+          <img src="images/bul2.jpg" alt="Buldak — информационный">
+          <div class="img-ph"><span class="ico">🖼</span><span>Buldak — слайд 2<br>Инфо</span></div>
+          <div class="card-label">Инфо</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="stripe"></div>
+
+<!-- ══════════════════════════════════════
+     SECTION 2 — POS ТАБЛИЧКИ
+══════════════════════════════════════ -->
+<div class="section" id="signage">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-eyebrow">02 — POS-материалы</div>
+      <div class="section-title">Система табличек для магазина</div>
+    </div>
+    <div class="section-hint">До и после</div>
+  </div>
+
+  <div class="case open" id="c-sign">
+    <div class="case-top" onclick="toggle('c-sign')">
+      <div class="case-top-left">
+        <div class="case-idx">05</div>
+        <div>
+          <div class="case-category">wuwstore · Навигация и ценники</div>
+          <div class="case-name">POS-дизайн</div>
+          <div class="case-chips">
+            <span class="chip">CorelDraw</span>
+            <span class="chip">Photoshop</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-toggle">+</div>
+    </div>
+    <div class="case-body">
+      <hr class="case-divider">
+      <div class="case-info">
+        <div>
+          <p class="case-desc">
+            Магазину нужны были новые таблички — старые были временными, без единого стиля. 
+            Главное требование: сотрудники должны сами делать таблички по шаблонам, 
+            не обращаясь каждый раз к дизайнеру. Ещё важно было использовать фирменные цвета
+            <br><br>
+            Когда система была готова, я использовал тот же стиль для карточек товаров на Ozon — 
+            получилась единая визуальная среда и в магазине, и на маркетплейсе.
+          </p>
+        </div>
+        <div>
+          <div class="case-solution-title">Что сделал</div>
+          <p class="case-solution">
+            Взял фирменные цвета магазина и wuwstore-паттерн как фон. 
+            Разделил таблички на два вида: <strong>акционные</strong> с динамичной формой, и прайс-листы. 
+            В шаблонах всё устроено так, что персонал может менять только текст — 
+            остальное зафиксировано.
+          </p>
+        </div>
+      </div>
+
+      <div class="ba-wrap">
+        <!-- BEFORE -->
+        <div class="ba-col">
+          <div class="ba-col-label before">До — старый дизайн</div>
+          <div class="ba-before-photos">
+            <div class="ba-photo" onclick="light(this)">
+              <img src="images/old.jpg" alt="Старая табличка — Stickers.One">
+              <div class="img-ph"><span class="ico">🏷</span><span>Stickers.One — 150₽</span></div>
+            </div>
+            <div class="ba-photo" onclick="light(this)">
+              <img src="images/old2.jpg" alt="Старая табличка — Открытки" -->
+              <div class="img-ph"><span class="ico">🏷</span><span>Открытки Illustore / Life poster</span></div>
+            </div>
+            <div class="ba-photo wide" onclick="light(this)">
+              <img src="images/old1.jpg" alt="Старая табличка — Дакимакура" -->
+              <div class="img-ph"><span class="ico">🏷</span><span>Дакимакура — 3500₽</span></div>
+            </div>
+          </div>
+          <p class="ba-note">Голубой фон, аниме шрифт, никакой связи с брендом</p>
+        </div>
+
+        <!-- AFTER -->
+        <div class="ba-col">
+          <div class="ba-col-label after">После — новый дизайн</div>
+          <!--
+            Раскладка 10 картинок в сетке 4 колонки:
+            Ряд 1: V1[1], V2[2], H1[3-4]      — 2 вертикальных A4 + 1 горизонтальная
+            Ряд 2: H2[1-2], V3[3], V4[4]      — 1 горизонтальная + 2 вертикальных A4
+            Ряд 3: S1[1], S2[2], H3[3-4]      — 2 квадратных + 1 горизонтальная
+            Ряд 4: S3[1], (пусто)[2-4]        — 1 квадратная
+
+            Порядок в HTML: V1, V2, H1, H2, V3, V4, S1, S2, H3, S3
+          -->
+          <div class="ba-new-grid">
+            <div class="ba-photo pos-v" onclick="light(this)">
+              <img src="images/mew1.jpg" alt="Новая табличка вертикальная 1">
+              <div class="img-ph"><span class="ico">🏷</span><span>Вертикальная A4 — 1</span><code>&lt;!-- img src="images/new-sign-v1.jpg" --&gt;</code></div>
+            </div>
+            <div class="ba-photo pos-v" onclick="light(this)">
+              <img src="images/mew4.jpg" alt="Новая табличка вертикальная 2">
+              <div class="img-ph"><span class="ico">🏷</span><span>Вертикальная A4 — 2</span><code>&lt;!-- img src="images/new-sign-v2.jpg" --&gt;</code></div>
+            </div>
+            <div class="ba-photo pos-h" onclick="light(this)">
+              <img src="images/og1.png" alt="Новая табличка горизонтальная 1">
+              <div class="img-ph"><span class="ico">🏷</span><span>Горизонтальная — 1</span><code>&lt;!-- img src="images/new-sign-h1.jpg" --&gt;</code></div>
+            </div>
+            <div class="ba-photo pos-h" onclick="light(this)">
+              <img src="images/og.jpg" alt="Новая табличка горизонтальная 2">
+              <div class="img-ph"><span class="ico">🏷</span><span>Горизонтальная — 2</span><code>&lt;!-- img src="images/new-sign-h2.jpg" --&gt;</code></div>
+            </div>
+            <div class="ba-photo pos-v" onclick="light(this)">
+              <img src="images/mew2.jpg" alt="Новая табличка вертикальная 3">
+              <div class="img-ph"><span class="ico">🏷</span><span>Вертикальная A4 — 3</span><code>&lt;!-- img src="images/new-sign-v3.jpg" --&gt;</code></div>
+            </div>
+            <div class="ba-photo pos-v" onclick="light(this)">
+              <img src="images/og3.png" alt="Новая табличка вертикальная 4">
+              <div class="img-ph"><span class="ico">🏷</span><span>Вертикальная A4 — 4</span><code>&lt;!-- img src="images/new-sign-v4.jpg" --&gt;</code></div>
+            </div>
+            <div class="ba-photo pos-s" onclick="light(this)">
+              <img src="images/pho2.jpg" alt="Новая табличка квадратная 1">
+              <div class="img-ph"><span class="ico">🏷</span><span>Квадратная — 1</span><code>&lt;!-- img src="images/new-sign-s1.jpg" --&gt;</code></div>
+            </div>
+            <div class="ba-photo pos-s" onclick="light(this)">
+              <img src="images/pho1.jpg" alt="Новая табличка квадратная 2">
+              <div class="img-ph"><span class="ico">🏷</span><span>Квадратная — 2</span><code>&lt;!-- img src="images/new-sign-s2.jpg" --&gt;</code></div>
+            </div>
+            <div class="ba-photo pos-h" onclick="light(this)">
+              <img src="images/og2.png" alt="Новая табличка горизонтальная 3">
+              <div class="img-ph"><span class="ico">🏷</span><span>Горизонтальная — 3</span><code>&lt;!-- img src="images/new-sign-h3.jpg" --&gt;</code></div>
+            </div>
+            <div class="ba-photo pos-s" onclick="light(this)">
+              <img src="images/pho.jpg" alt="Новая табличка квадратная 3">
+              <div class="img-ph"><span class="ico">🏷</span><span>Квадратная — 3</span><code>&lt;!-- img src="images/new-sign-s3.jpg" --&gt;</code></div>
+            </div>
+          </div>
+          <p class="ba-note">Фирменный стиль, шаблоны которые редактирует персонал, единая система форматов</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="stripe"></div>
+
+<!-- ══════════════════════════════════════
+     SECTION 3 — СУВЕНИРНАЯ ПРОДУКЦИЯ
+══════════════════════════════════════ -->
+<div class="section" id="souvenir">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-eyebrow">03 — Сувенирная продукция</div>
+      <div class="section-title">Дизайн под производство</div>
+    </div>
+    <div class="section-hint">Кружки · Значки · Тетради</div>
+  </div>
+
+  <div class="case open" id="c-sov">
+    <div class="case-top" onclick="toggle('c-sov')">
+      <div class="case-top-left">
+        <div class="case-idx">06</div>
+        <div>
+          <div class="case-category">wuwstore · Сувениры</div>
+          <div class="case-name">Кружки, значки, тетради</div>
+          <div class="case-chips">
+            <span class="chip">Photoshop</span>
+            <span class="chip">Illustrator</span>
+            <span class="chip">Сублимация</span>
+            <span class="chip">Офсет</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-toggle">+</div>
+    </div>
+    <div class="case-body">
+      <hr class="case-divider">
+      <div class="case-info">
+        <div>
+          <p class="case-desc">
+            Делал дизайн сувенирной продукции для магазина: кружки, значки, тетради и тд. 
+            Разные направления под разную аудиторию в том числе продукция на заказ. Дальше несколько примеров
+          </p>
+        </div>
+        <div>
+          <div class="case-solution-title">Что сделал</div>
+          <p class="case-solution">
+            Все макеты готовил с учётом требований производства: 
+            разрешение, отступы под обрез, цветовая модель под сублимацию или офсет.
+          </p>
+        </div>
+      </div>
+
+      <!-- 11 квадратных картинок, единая сетка -->
+      <div class="souvenir-grid">
+        <div class="souvenir-item" onclick="light(this)">
+          <img src="images/cup.jpg" alt="Кружки">
+          <div class="img-ph"><span class="ico">🎁</span><span>Кружки </span><code>&lt;!-- img src="images/sov-1.jpg" --&gt;</code></div>
+        </div>
+        <div class="souvenir-item" onclick="light(this)">
+          <img src="images/cup1.jpg" alt="Кружки">
+          <div class="img-ph"><span class="ico">🎁</span><span>Кружки</span><code>&lt;!-- img src="images/sov-2.jpg" --&gt;</code></div>
+        </div>
+        <div class="souvenir-item" onclick="light(this)">
+          <img src="images/cup2.jpg" alt="Кружки">
+          <div class="img-ph"><span class="ico">🎁</span><span>Кружки</span><code>&lt;!-- img src="images/sov-3.jpg" --&gt;</code></div>
+        </div>
+        <div class="souvenir-item" onclick="light(this)">
+          <img src="images/cup3.jpg" alt="Кружки">
+          <div class="img-ph"><span class="ico">🎁</span><span>Кружки</span><code>&lt;!-- img src="images/sov-4.jpg" --&gt;</code></div>
+        </div>
+        <div class="souvenir-item" onclick="light(this)">
+          <img src="images/cup4.jpg" alt="Кружки">
+          <div class="img-ph"><span class="ico">🎁</span><span>Кружки</span><code>&lt;!-- img src="images/sov-5.jpg" --&gt;</code></div>
+        </div>
+        <div class="souvenir-item" onclick="light(this)">
+          <img src="images/cup5.jpg" alt="Кружки">
+          <div class="img-ph"><span class="ico">🎁</span><span>Кружки</span><code>&lt;!-- img src="images/sov-6.jpg" --&gt;</code></div>
+        </div>
+        <div class="souvenir-item" onclick="light(this)">
+          <img src="images/cup6.jpg" alt="Кружки">
+          <div class="img-ph"><span class="ico">🎁</span><span>Кружки</span><code>&lt;!-- img src="images/sov-7.jpg" --&gt;</code></div>
+        </div>
+        <div class="souvenir-item" onclick="light(this)">
+          <img src="images/pin.jpg" alt="Кружки">
+          <div class="img-ph"><span class="ico">🎁</span><span>Кружки</span><code>&lt;!-- img src="images/sov-8.jpg" --&gt;</code></div>
+        </div>
+        <div class="souvenir-item" onclick="light(this)">
+          <img src="images/pin1.jpg" alt="Значки">
+          <div class="img-ph"><span class="ico">🎁</span><span>Значки</span><code>&lt;!-- img src="images/sov-9.jpg" --&gt;</code></div>
+        </div>
+        <div class="souvenir-item" onclick="light(this)">
+          <img src="images/not.jpg" alt="Тетрадь">
+          <div class="img-ph"><span class="ico">🎁</span><span>Тетрадь</span><code>&lt;!-- img src="images/sov-10.jpg" --&gt;</code></div>
+        </div>
+        <div class="souvenir-item" onclick="light(this)">
+          <img src="images/not1.jpg" alt="Тетрадь">
+          <div class="img-ph"><span class="ico">🎁</span><span>Тетрадь</span><code>&lt;!-- img src="images/sov-11.jpg" --&gt;</code></div>
+        </div>
+        <div class="souvenir-item" onclick="light(this)">
+          <img src="images/not2.jpg" alt="Тетрадь">
+          <div class="img-ph"><span class="ico">🎁</span><span>Тетрадь</span><code>&lt;!-- img src="images/sov-11.jpg" --&gt;</code></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact" id="contact">
+  <div>
+    <div class="contact-title">Готов к<br><span>новым задачам</span></div>
+    <div class="contact-sub">Томск · Открыт к удалённой работе</div>
+  </div>
+  <div class="contact-links">
+    <!-- ВСТАВИТЬ: ссылку на hh.ru и Telegram -->
+    <a href="https://hh.ru/resume/88462554ff104c27e80039ed1f3279726a5575" target="_blank" class="contact-link primary">Резюме на hh.ru →</a>
+    <a href="https://t.me/vodichesky" target="_blank" class="contact-link">Telegram</a>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lb" onclick="closeLb()">
+  <div class="lightbox-close" onclick="closeLb()">✕</div>
+  <img id="lb-img" src="" alt="">
+</div>
+
+<script>
+  function toggle(id) {
+    document.getElementById(id).classList.toggle('open');
+  }
+
+  function light(el) {
+    const img = el.querySelector('img');
+    if (!img) return;
+    document.getElementById('lb-img').src = img.src;
+    document.getElementById('lb').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLb() {
+    document.getElementById('lb').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+</script>
+</body>
+</html>
